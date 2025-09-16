@@ -67,6 +67,16 @@ db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
 app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
+
+# Allow requests from Streamlit Cloud and local testing. For production restrict origins.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # change to ["https://your-streamlit-app-url"] in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
