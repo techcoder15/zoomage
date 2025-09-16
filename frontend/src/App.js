@@ -175,9 +175,14 @@ function App() {
     try {
       const label = {
         ...newLabel,
-        id: Date.now().toString(),
-        created_at: new Date().toISOString()
+        // Ensure numeric values
+        x: Number(newLabel.x) || 0.5,
+        y: Number(newLabel.y) || 0.5,
+        width: Number(newLabel.width) || 0.0,
+        height: Number(newLabel.height) || 0.0
       };
+      
+      console.log('Submitting label:', label); // Debug log
       
       await axios.post(`${API}/images/${selectedImage.id}/labels`, label);
       loadLabels(selectedImage.id);
@@ -193,7 +198,8 @@ function App() {
       setIsAddingLabel(false);
     } catch (error) {
       console.error('Error adding label:', error);
-      alert('Error adding label');
+      console.error('Label data that failed:', newLabel); // Debug log
+      alert('Error adding label: ' + (error.response?.data?.detail || error.message));
     }
   };
 
