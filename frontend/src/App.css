@@ -1,34 +1,126 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.App {
+  min-height: 100vh;
+  background-color: #111827;
+  color: white;
 }
 
 .App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #1f2937;
+  padding: 20px;
+  color: white;
+  text-align: center;
 }
 
 .App-link {
-    color: #61dafb;
+  color: #61dafb;
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.App-link:hover {
+  color: #21b0d4;
+}
+
+/* OpenSeadragon custom styles */
+.openseadragon-container {
+  background-color: #000 !important;
+  border-radius: 8px;
+}
+
+.openseadragon-canvas {
+  border-radius: 8px;
+}
+
+/* Custom scrollbar for modal content */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #374151;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* Focus styles */
+input:focus, button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Hover effects for interactive elements */
+.cursor-pointer:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Modal backdrop blur */
+.fixed.inset-0 {
+  backdrop-filter: blur(4px);
+}
+
+/* Custom button styles */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Image gallery item hover effects */
+.cursor-pointer img {
+  transition: transform 0.2s ease-in-out;
+}
+
+.cursor-pointer:hover img {
+  transform: scale(1.02);
+}
+
+/* Navigation controls styling */
+#zoom-in, #zoom-out, #home, #full-page, #rotate-left, #rotate-right {
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+#zoom-in:hover, #zoom-out:hover, #home:hover, #full-page:hover, #rotate-left:hover, #rotate-right:hover {
+  background-color: rgba(55, 65, 81, 0.9);
+  transform: scale(1.05);
 }
