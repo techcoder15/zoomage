@@ -237,13 +237,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "OpenSeadragon Deep Zoom Integration"
-    - "NASA Image Search Interface"
-    - "AI Analysis Interface"
     - "Interactive Labeling System"
-  stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+  stuck_tasks:
+    - "Interactive Labeling System"
+  test_all: false
+  test_priority: "stuck_first"
 
 agent_communication:
   - agent: "main"
