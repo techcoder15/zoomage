@@ -12,8 +12,50 @@ from datetime import datetime, timezone
 import requests
 import aiofiles
 import base64
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 import json
+# replace this import
+# from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+
+from openai import AsyncOpenAI
+import base64, requests, uuid, logging
+
+async def get_ai_analysis(image_url: str, analysis_type: str = "general") -> str:
+    """Get AI analysis of NASA image"""
+    try:
+        client = AsyncOpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+        prompts = {
+            "general": "Analyze this NASA space image...",
+            "features": "Identify and describe specific features...",
+            "patterns": "Look for patterns, structures, or anomalies...",
+            "anomalies": "Examine this NASA image for unusual features..."
+        }
+        prompt = prompts.get(analysis_type, prompts["general"])
+
+        # fetch and encode image
+        image_response = requests.get(image_url, timeout=30)
+        image_response.raise_for_status()
+        image_base64 = base64.b64encode(image_response.content).decode("utf-8")
+
+        # call OpenAI
+        completion = await client.chat.completions.create(
+            model="gpt-4o-mini",  # or gpt-4o
+            messages=[
+                {"role": "system", "content": "You are an expert space imagery analyst."},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_base64}"}}
+                    ]
+                }
+            ]
+        )
+        return completion.choices[0].message.content
+    except Exception as e:
+        logging.error(f"AI analysis failed: {e}")
+        return f"AI analysis unavailable: {str(e)}"
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
