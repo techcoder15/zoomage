@@ -69,15 +69,22 @@ db = client[os.environ['DB_NAME']]
 app = FastAPI()
 from fastapi.middleware.cors import CORSMiddleware
 
-# Allow requests from Streamlit Cloud and local testing. For production restrict origins.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change to ["https://your-streamlit-app-url"] in production
-    allow_credentials=True,
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+@app.post("/api/search")
+def search_images(query: str, media_type: str):
+    # your search code here
+    return [{"url": "https://example.com/image.jpg", "title": "Example", "nasa_id": "EX123"}]
+
+@app.post("/api/analyze")
+def analyze_image(image_url: str, analysis_type: str):
+    # your AI analysis code here
+    return {"analysis": "This is a demo analysis."}
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
