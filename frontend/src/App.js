@@ -181,7 +181,15 @@ function App() {
       
       await axios.post(`${API}/images/${selectedImage.id}/labels`, label);
       loadLabels(selectedImage.id);
-      setNewLabel({ label: '', description: '', category: '', x: 0, y: 0 });
+      setNewLabel({ 
+        label: '', 
+        description: '', 
+        category: '', 
+        x: 0.5, 
+        y: 0.5, 
+        width: 0.0, 
+        height: 0.0 
+      });
       setIsAddingLabel(false);
     } catch (error) {
       console.error('Error adding label:', error);
