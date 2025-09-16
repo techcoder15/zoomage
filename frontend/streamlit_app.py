@@ -1,5 +1,6 @@
 import streamlit as st
-from app import process_image  # import your backend function
+from backend.server import process_image   # ✅ import from backend
+
 
 st.set_page_config(page_title="Zoomage", layout="wide")
 
