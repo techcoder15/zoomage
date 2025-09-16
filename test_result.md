@@ -207,15 +207,18 @@ frontend:
         
   - task: "Interactive Labeling System"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Click-to-add labels with categories and descriptions"
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Interactive labeling system has backend validation error. When attempting to add labels, getting 422 HTTP error from /api/images/{id}/labels endpoint. Label form appears correctly and can be filled, but submission fails. Console shows 'Error adding label: AxiosError'. Backend API expects specific label data format that frontend may not be providing correctly."
 
 metadata:
   created_by: "main_agent"
