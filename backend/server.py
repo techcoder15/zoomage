@@ -143,8 +143,13 @@ async def get_ai_analysis(image_url: str, analysis_type: str = "general") -> str
         
         prompt = prompts.get(analysis_type, prompts["general"])
         
-        # Create image content from URL
-        image_content = ImageContent(image_url=image_url)
+        # Download image and convert to base64
+        image_response = requests.get(image_url, timeout=30)
+        image_response.raise_for_status()
+        image_base64 = base64.b64encode(image_response.content).decode('utf-8')
+        
+        # Create image content from base64
+        image_content = ImageContent(image_base64=image_base64)
         
         # Send message with image
         user_message = UserMessage(
