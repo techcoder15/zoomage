@@ -18,7 +18,15 @@ function App() {
   const [patterns, setPatterns] = useState('');
   const [showPatterns, setShowPatterns] = useState(false);
   const [isAddingLabel, setIsAddingLabel] = useState(false);
-  const [newLabel, setNewLabel] = useState({ label: '', description: '', category: '' });
+  const [newLabel, setNewLabel] = useState({ 
+    label: '', 
+    description: '', 
+    category: '', 
+    x: 0.5, 
+    y: 0.5, 
+    width: 0.0, 
+    height: 0.0 
+  });
   
   const viewerRef = useRef(null);
   const osdViewerRef = useRef(null);
