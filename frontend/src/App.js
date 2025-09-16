@@ -72,57 +72,65 @@ function App() {
     }
 
     if (viewerRef.current && imageUrl) {
-      osdViewerRef.current = OpenSeadragon({
-        element: viewerRef.current,
-        prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
-        tileSources: {
-          type: 'image',
-          url: imageUrl,
-          buildPyramid: false
-        },
-        showNavigationControl: true,
-        showZoomControl: true,
-        showHomeControl: true,
-        showFullPageControl: true,
-        showRotationControl: true,
-        gestureSettingsMouse: {
-          clickToZoom: false,
-          dblClickToZoom: true,
-          dragToPan: true,
-          scrollToZoom: true,
-          pinchToZoom: true
-        },
-        zoomInButton: 'zoom-in',
-        zoomOutButton: 'zoom-out',
-        homeButton: 'home',
-        fullPageButton: 'full-page',
-        rotateLeftButton: 'rotate-left',
-        rotateRightButton: 'rotate-right',
-        animationTime: 0.5,
-        blendTime: 0.1,
-        constrainDuringPan: false,
-        maxZoomPixelRatio: 10,
-        minZoomLevel: 0.1,
-        visibilityRatio: 0.1,
-        springStiffness: 6.5
-      });
+      try {
+        osdViewerRef.current = OpenSeadragon({
+          element: viewerRef.current,
+          prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+          tileSources: {
+            type: 'image',
+            url: imageUrl,
+            buildPyramid: false
+          },
+          showNavigationControl: true,
+          showZoomControl: true,
+          showHomeControl: true,
+          showFullPageControl: true,
+          showRotationControl: true,
+          gestureSettingsMouse: {
+            clickToZoom: false,
+            dblClickToZoom: true,
+            dragToPan: true,
+            scrollToZoom: true,
+            pinchToZoom: true
+          },
+          zoomInButton: 'zoom-in',
+          zoomOutButton: 'zoom-out',
+          homeButton: 'home',
+          fullPageButton: 'full-page',
+          rotateLeftButton: 'rotate-left',
+          rotateRightButton: 'rotate-right',
+          animationTime: 0.5,
+          blendTime: 0.1,
+          constrainDuringPan: false,
+          maxZoomPixelRatio: 10,
+          minZoomLevel: 0.1,
+          visibilityRatio: 0.1,
+          springStiffness: 6.5
+        });
 
-      // Add click handler for adding labels
-      osdViewerRef.current.addHandler('canvas-click', (event) => {
-        if (isAddingLabel) {
-          const viewportPoint = osdViewerRef.current.viewport.pointFromPixel(event.position);
-          setNewLabel(prev => ({
-            ...prev,
-            x: viewportPoint.x,
-            y: viewportPoint.y
-          }));
+        // Add click handler for adding labels
+        osdViewerRef.current.addHandler('canvas-click', (event) => {
+          if (isAddingLabel) {
+            const viewportPoint = osdViewerRef.current.viewport.pointFromPixel(event.position);
+            setNewLabel(prev => ({
+              ...prev,
+              x: viewportPoint.x,
+              y: viewportPoint.y
+            }));
+          }
+        });
+
+        // Load existing labels if we have a selected image
+        if (selectedImage) {
+          loadLabels(selectedImage.id);
         }
-      });
-
-      // Load existing labels
-      loadLabels(selectedImage.id);
+        
+        console.log('OpenSeadragon viewer initialized successfully');
+      } catch (error) {
+        console.error('Error initializing OpenSeadragon viewer:', error);
+      }
     }
-  }, [selectedImage, isAddingLabel, newLabel]);
+  }, [isAddingLabel, selectedImage]);
 
   // Load labels for an image
   const loadLabels = async (imageId) => {
