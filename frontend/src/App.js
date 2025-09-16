@@ -111,11 +111,11 @@ function App() {
       osdViewerRef.current.addHandler('canvas-click', (event) => {
         if (isAddingLabel) {
           const viewportPoint = osdViewerRef.current.viewport.pointFromPixel(event.position);
-          setNewLabel({
-            ...newLabel,
+          setNewLabel(prev => ({
+            ...prev,
             x: viewportPoint.x,
             y: viewportPoint.y
-          });
+          }));
         }
       });
 
